@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Inter", Arial, sans-serif;
+        background: #f4ebd3;
+        color: #555879;
+        line-height: 1.6;
+      }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #555879;
+        padding: 18px 32px;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+      .logo {
+        color: #f4ebd3;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+      .search-bar input {
+        padding: 10px 16px;
+        border-radius: 8px;
+        border: 1px solid #98a1bc;
+        width: 250px;
+        transition: 0.3s;
+      }
+      .search-bar input:focus {
+        outline: none;
+        border-color: #555879;
+      }
+      .search-bar button {
+        background: #555879;
+        color: #f4ebd3;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        margin-left: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .search-bar button:hover {
+        background: #98a1bc;
+      }
+      .user-nav span {
+        margin-left: 20px;
+        font-size: 15px;
+        color: #ded3c4;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .user-nav span:hover {
+        color: #f4ebd3;
+      }
+      .main-stats {
+        display: flex;
+        gap: 24px;
+        margin: 36px 5vw;
+        flex-wrap: wrap;
+      }
+      .highlight-card {
+        background: #fff;
+        padding: 28px;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        flex: 1;
+        min-width: 220px;
+        position: relative;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .highlight-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+      }
+      .highlight-card h4 {
+        margin-bottom: 12px;
+        font-weight: 600;
+        color: #555879;
+      }
+      .stat-figure {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-right: 12px;
+        color: #555879;
+      }
+      .trend-up {
+        color: #27ae60;
+        font-weight: 600;
+        margin-left: 8px;
+      }
+      .trend-down {
+        color: #e74c3c;
+        font-weight: 600;
+        margin-left: 8px;
+      }
+      .mini-chart {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+      }
+      .jobs-section {
+        background: #fff;
+        border-radius: 16px;
+        padding: 32px;
+        margin: 0 5vw 36px 5vw;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+      }
+      .jobs-section:hover {
+        transform: translateY(-2px);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 18px;
+        font-size: 16px;
+        color: #555879;
+      }
+      th,
+      td {
+        padding: 14px 12px;
+        text-align: left;
+        border-bottom: 1px solid #ded3c4;
+      }
+      th {
+        color: #98a1bc;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+      }
+      tr:hover td {
+        background: #f4ebd3;
+        transition: 0.3s;
+      }
+      .active-badge {
+        color: #27ae60;
+        font-weight: 600;
+        background: rgba(39, 174, 96, 0.1);
+        padding: 6px 18px;
+        border-radius: 12px;
+        display: inline-block;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .active-badge:hover {
+        background: rgba(39, 174, 96, 0.2);
+      }
+      .inactive-badge {
+        color: #e67e22;
+        font-weight: 600;
+        background: rgba(230, 126, 34, 0.1);
+        padding: 6px 18px;
+        border-radius: 12px;
+        display: inline-block;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .inactive-badge:hover {
+        background: rgba(230, 126, 34, 0.2);
+      }
+      @media (max-width: 900px) {
+        .main-stats {
+          flex-direction: column;
+          gap: 18px;
+        }
+        .jobs-section {
+          padding: 20px;
+        }
+        table {
+          font-size: 14px;
+        }
+        .mini-chart {
+          position: static;
+          display: block;
+          margin: 12px 0;
+        }
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="logo">NexHire</div>
+      <div class="search-bar">
+        <input type="text" placeholder="UI/UX Designer" />
+        <button>Search</button>
+      </div>
+      <div class="user-nav">
+        <span>Vacancies</span>
+        <span>Contact Us</span>
+        <span class="notification"></span>
+        <span class="avatar"></span>
+      </div>
+    </nav>
+    <main>
+      <button
+        id="create-job-btn"
+        style="
+          margin: 24px 5vw 0 5vw;
+          padding: 12px 28px;
+          background: #555879;
+          color: #f4ebd3;
+          border: none;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+        "
+      >
+        Create Job Post
+      </button>
+      <div
+        id="job-modal"
+        style="
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.25);
+          z-index: 1000;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        <div
+          style="
+            background: #fff;
+            padding: 32px 24px;
+            border-radius: 16px;
+            min-width: 320px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            position: relative;
+          "
+        >
+          <h2 style="margin-bottom: 18px; color: #555879">Create Job Post</h2>
+          <form id="job-form">
+            <label
+              >Job Title<br /><input
+                name="job_title"
+                required
+                style="
+                  width: 100%;
+                  margin-bottom: 12px;
+                  padding: 8px;
+                  border-radius: 6px;
+                  border: 1px solid #98a1bc;
+                " /></label
+            ><br />
+            <label
+              >Category<br /><input
+                name="category"
+                required
+                style="
+                  width: 100%;
+                  margin-bottom: 12px;
+                  padding: 8px;
+                  border-radius: 6px;
+                  border: 1px solid #98a1bc;
+                " /></label
+            ><br />
+            <label
+              >Openings<br /><input
+                name="openings"
+                type="number"
+                min="1"
+                required
+                style="
+                  width: 100%;
+                  margin-bottom: 12px;
+                  padding: 8px;
+                  border-radius: 6px;
+                  border: 1px solid #98a1bc;
+                " /></label
+            ><br />
+            <label
+              >Applications<br /><input
+                name="applications"
+                type="number"
+                min="0"
+                required
+                style="
+                  width: 100%;
+                  margin-bottom: 12px;
+                  padding: 8px;
+                  border-radius: 6px;
+                  border: 1px solid #98a1bc;
+                " /></label
+            ><br />
+            <label
+              >Status<br />
+              <select
+                name="status"
+                required
+                style="
+                  width: 100%;
+                  margin-bottom: 12px;
+                  padding: 8px;
+                  border-radius: 6px;
+                  border: 1px solid #98a1bc;
+                "
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select> </label
+            ><br />
+            <label
+              >Company<br /><input
+                name="company"
+                required
+                style="
+                  width: 100%;
+                  margin-bottom: 12px;
+                  padding: 8px;
+                  border-radius: 6px;
+                  border: 1px solid #98a1bc;
+                " /></label
+            ><br />
+            <button
+              type="submit"
+              style="
+                background: #555879;
+                color: #f4ebd3;
+                border: none;
+                border-radius: 8px;
+                padding: 10px 20px;
+                font-weight: 600;
+                cursor: pointer;
+              "
+            >
+              Add Job
+            </button>
+            <button
+              type="button"
+              id="close-modal"
+              style="
+                margin-left: 12px;
+                background: #ded3c4;
+                color: #555879;
+                border: none;
+                border-radius: 8px;
+                padding: 10px 20px;
+                font-weight: 600;
+                cursor: pointer;
+              "
+            >
+              Cancel
+            </button>
+          </form>
+          <div id="job-msg" style="margin-top: 12px; color: #e74c3c"></div>
+        </div>
+      </div>
+      <section class="main-stats">
+        <div class="highlight-card">
+          <h4>Job Posts</h4>
+          <span class="stat-figure" id="count-jobs">0</span>
+          <span id="trend-jobs"></span>
+          <canvas
+            id="jobsChart"
+            class="mini-chart"
+            width="65"
+            height="40"
+          ></canvas>
+        </div>
+        <div class="highlight-card">
+          <h4>Total Applications</h4>
+          <span class="stat-figure" id="count-applications">0</span>
+          <span id="trend-applications"></span>
+          <canvas
+            id="applicationsChart"
+            class="mini-chart"
+            width="65"
+            height="40"
+          ></canvas>
+        </div>
+        <div class="highlight-card">
+          <h4>Number of Hirings</h4>
+          <span class="stat-figure" id="count-hirings">0%</span>
+          <span id="trend-hirings"></span>
+          <canvas
+            id="hiringsChart"
+            class="mini-chart"
+            width="65"
+            height="40"
+          ></canvas>
+        </div>
+      </section>
+      <section class="jobs-section">
+        <table>
+          <thead>
+            <tr>
+              <th>Job Title</th>
+              <th>Category</th>
+              <th>Openings</th>
+              <th>Applications</th>
+              <th>Status</th>
+              <th>Company</th>
+            </tr>
+          </thead>
+          <tbody id="jobs-table"></tbody>
+        </table>
+      </section>
+    </main>
+    <script>
+      let fullList = [];
+      function parseCsv(data) {
+        let rows = data.trim().split("\n");
+        let columns = rows[0].split(",");
+        return rows
+          .slice(1)
+          .filter(
+            (line) => line.trim() && line.split(",").length === columns.length
+          )
+          .map((line) => {
+            let entries = line.split(",");
+            let jobItem = {};
+            columns.forEach((key, idx) => {
+              jobItem[key.trim()] = entries[idx] ? entries[idx].trim() : "";
+            });
+            return jobItem;
+          });
+      }
+      function calcTrend(arr) {
+        if (arr.length < 2) return 0;
+        let prev = arr[arr.length - 2],
+          latest = arr[arr.length - 1];
+        if (!prev) return 0;
+        return (((latest - prev) / prev) * 100).toFixed(1);
+      }
+      function updateStats(jobs) {
+        let postingsCount = jobs.length;
+        let applicationsTotal = jobs.reduce(
+          (acc, job) => acc + Number(job.applications || 0),
+          0
+        );
+        let statusActive = jobs.filter(
+          (job) => job.status && job.status.toLowerCase() === "active"
+        ).length;
+        let hiringsPercent = postingsCount
+          ? Math.round((statusActive / postingsCount) * 100)
+          : 0;
+        $("#count-jobs").text(postingsCount);
+        $("#count-applications").text(applicationsTotal);
+        $("#count-hirings").text(hiringsPercent + "%");
+      }
+      function renderJobs(jobs) {
+        $("#jobs-table").empty();
+        jobs.forEach((job, i) => {
+          // Skip jobs where all fields are blank or undefined
+          if (
+            !job.job_title &&
+            !job.category &&
+            !job.openings &&
+            !job.applications &&
+            !job.status &&
+            !job.company
+          ) {
+            return;
+          }
+          let tagClass =
+            job.status && job.status.toLowerCase() === "active"
+              ? "active-badge"
+              : "inactive-badge";
+          $("#jobs-table").append(`
+            <tr>
+              <td>${job.job_title || ""}</td>
+              <td>${job.category || ""}</td>
+              <td>${job.openings || ""}</td>
+              <td>${job.applications || ""}</td>
+              <td><span class="${tagClass}" data-index="${i}">${
+            job.status || ""
+          }</span></td>
+              <td>${job.company || ""}</td>
+              <td><button class="delete-job-btn" data-index="${i}" style="background:#e74c3c;color:#fff;border:none;border-radius:6px;padding:6px 14px;cursor:pointer;">Delete</button></td>
+            </tr>
+          `);
+        });
+      }
+      $(function () {
+        function reloadJobs() {
+          $.get("database.csv", function (fileContents) {
+            fullList = parseCsv(fileContents);
+            updateStats(fullList);
+            renderJobs(fullList);
+            drawMiniCharts(fullList);
+            // Fetch previous stats and update percentage increases
+            $.get(
+              "update_stats.php",
+              function (resp) {
+                let prevStats = { jobs: 0, applications: 0, hirings: 0 };
+                if (resp && resp.success && resp.stats) {
+                  prevStats = resp.stats;
+                }
+                // Current stats
+                let jobsCount = fullList.length;
+                let applicationsTotal = fullList.reduce(
+                  (sum, job) => sum + Number(job.applications || 0),
+                  0
+                );
+                let statusActive = fullList.filter(
+                  (job) => job.status && job.status.toLowerCase() === "active"
+                ).length;
+                let hiringsPercent = jobsCount
+                  ? Math.round((statusActive / jobsCount) * 100)
+                  : 0;
+                // Calculate percentage increases
+                let jobsInc = prevStats.jobs
+                  ? (
+                      ((jobsCount - prevStats.jobs) / prevStats.jobs) *
+                      100
+                    ).toFixed(1)
+                  : 0;
+                let appsInc = prevStats.applications
+                  ? (
+                      ((applicationsTotal - prevStats.applications) /
+                        prevStats.applications) *
+                      100
+                    ).toFixed(1)
+                  : 0;
+                let hiringsInc = prevStats.hirings
+                  ? (
+                      ((hiringsPercent - prevStats.hirings) /
+                        prevStats.hirings) *
+                      100
+                    ).toFixed(1)
+                  : 0;
+                // Update UI
+                $("#trend-jobs").html(
+                  `<span class="${jobsInc >= 0 ? "trend-up" : "trend-down"}">${
+                    jobsInc >= 0 ? "+" : ""
+                  }${jobsInc}%</span>`
+                );
+                $("#trend-applications").html(
+                  `<span class="${appsInc >= 0 ? "trend-up" : "trend-down"}">${
+                    appsInc >= 0 ? "+" : ""
+                  }${appsInc}%</span>`
+                );
+                $("#trend-hirings").html(
+                  `<span class="${
+                    hiringsInc >= 0 ? "trend-up" : "trend-down"
+                  }">${hiringsInc >= 0 ? "+" : ""}${hiringsInc}%</span>`
+                );
+              },
+              "json"
+            );
+          });
+        }
+        reloadJobs();
+        $("#jobs-table").on(
+          "click",
+          ".active-badge, .inactive-badge",
+          function () {
+            let idx = $(this).data("index");
+            let job = fullList[idx];
+            let newStatus =
+              job.status && job.status.toLowerCase() === "active"
+                ? "Inactive"
+                : "Active";
+            if (newStatus === "active") newStatus = "Active";
+            if (newStatus === "inactive") newStatus = "Inactive";
+            $.post(
+              "update_status.php",
+              { index: idx, status: newStatus },
+              function (resp) {
+                let res;
+                try {
+                  res = JSON.parse(resp);
+                } catch {
+                  res = {};
+                }
+                if (res.success) {
+                  // Update stats.json after status change
+                  let jobsCount = fullList.length;
+                  let applicationsTotal = fullList.reduce(
+                    (sum, job) => sum + Number(job.applications || 0),
+                    0
+                  );
+                  let statusActive = fullList.filter(
+                    (job) => job.status && job.status.toLowerCase() === "active"
+                  ).length;
+                  let hiringsPercent = jobsCount
+                    ? Math.round((statusActive / jobsCount) * 100)
+                    : 0;
+                  $.ajax({
+                    url: "update_stats.php",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                      jobs: jobsCount,
+                      applications: applicationsTotal,
+                      hirings: hiringsPercent,
+                    }),
+                    complete: function () {
+                      reloadJobs();
+                    },
+                  });
+                } else {
+                  setTimeout(reloadJobs, 800);
+                }
+              }
+            );
+          }
+        );
+        $("#jobs-table").on("click", ".delete-job-btn", function () {
+          let idx = $(this).data("index");
+          if (confirm("Are you sure you want to delete this job post?")) {
+            $.post("delete_job.php", { index: idx }, function (resp) {
+              let res;
+              try {
+                res = JSON.parse(resp);
+              } catch {
+                res = {};
+              }
+              if (res.success) {
+                // Update stats.json after deletion
+                let jobsCount = fullList.length - 1;
+                let applicationsTotal = fullList.reduce(
+                  (sum, job) => sum + Number(job.applications || 0),
+                  0
+                );
+                let statusActive = fullList.filter(
+                  (job) => job.status && job.status.toLowerCase() === "active"
+                ).length;
+                let hiringsPercent = jobsCount
+                  ? Math.round((statusActive / jobsCount) * 100)
+                  : 0;
+                reloadJobs();
+              } else {
+                alert(res.error || "Error deleting job.");
+              }
+            });
+          }
+        });
+        // Modal logic
+        $("#create-job-btn").on("click", function () {
+          $("#job-modal").css("display", "flex");
+          $("#job-msg").text("");
+          $("#job-form")[0].reset();
+        });
+        $("#close-modal").on("click", function () {
+          $("#job-modal").hide();
+        });
+        $("#job-form").on("submit", function (e) {
+          e.preventDefault();
+          let data = $(this).serialize();
+          $.ajax({
+            url: "add_job.php",
+            type: "POST",
+            data: data,
+            success: function (resp) {
+              let res;
+              try {
+                res = JSON.parse(resp);
+              } catch {
+                res = {};
+              }
+              if (res.success) {
+                $("#job-msg")
+                  .css("color", "#27ae60")
+                  .text("Job added successfully!");
+                setTimeout(function () {
+                  $("#job-modal").hide();
+                  reloadJobs();
+                }, 1500);
+                // Manual snapshot stats button
+                $("#snapshot-stats-btn").on("click", function () {
+                  // Get current stats
+                  let jobsCount = fullList.length;
+                  let applicationsTotal = fullList.reduce(
+                    (sum, job) => sum + Number(job.applications || 0),
+                    0
+                  );
+                  let statusActive = fullList.filter(
+                    (job) => job.status && job.status.toLowerCase() === "active"
+                  ).length;
+                  let hiringsPercent = jobsCount
+                    ? Math.round((statusActive / jobsCount) * 100)
+                    : 0;
+                  $.ajax({
+                    url: "update_stats.php",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                      jobs: jobsCount,
+                      applications: applicationsTotal,
+                      hirings: hiringsPercent,
+                    }),
+                    success: function () {
+                      alert("Stats snapshot saved!");
+                      reloadJobs();
+                    },
+                    error: function () {
+                      alert("Failed to snapshot stats.");
+                    },
+                  });
+                });
+              } else {
+                $("#job-msg")
+                  .css("color", "#e74c3c")
+                  .text(res.error || "Error adding job.");
+              }
+            },
+            error: function (xhr, status, error) {
+              $("#job-msg")
+                .css("color", "#e74c3c")
+                .text("Network or server error: " + error);
+            },
+          });
+        });
+      });
+      function drawMiniCharts(jobs) {
+        let jobsHistory = jobs.map((_) => 1);
+        let applicationsHistory = jobs.map((j) => Number(j.applications || 0));
+        let hiringsPercentHistory = jobs.map((_, idx) => {
+          let activeCount = jobs
+            .slice(0, idx + 1)
+            .filter(
+              (j) =>
+                j.status &&
+                typeof j.status === "string" &&
+                j.status.toLowerCase() === "active"
+            ).length;
+          return Math.round((activeCount / (idx + 1)) * 100);
+        });
+        function miniChart(id, data, color) {
+          let ctx = document.getElementById(id).getContext("2d");
+          if (ctx.chart) ctx.chart.destroy();
+          ctx.chart = new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: data.map((_, i) => "D" + (i + 1)),
+              datasets: [
+                {
+                  data: data,
+                  borderColor: color,
+                  borderWidth: 2,
+                  pointRadius: 0,
+                  fill: false,
+                  tension: 0.4,
+                },
+              ],
+            },
+            options: {
+              responsive: false,
+              plugins: { legend: { display: false } },
+              scales: { x: { display: false }, y: { display: false } },
+            },
+          });
+        }
+        miniChart("jobsChart", jobsHistory, "#98A1BC");
+        miniChart("applicationsChart", applicationsHistory, "#555879");
+        miniChart("hiringsChart", hiringsPercentHistory, "#DED3C4");
+        function setTrend(elemId, arr) {
+          let val = calcTrend(arr);
+          let el = $(`#${elemId}`);
+          if (val > 0) el.html(`<span class="trend-up">+${val}%</span>`);
+          else if (val < 0) el.html(`<span class="trend-down">${val}%</span>`);
+          else el.html(`<span>0.0%</span>`);
+        }
+        setTrend("trend-jobs", jobsHistory);
+        setTrend("trend-applications", applicationsHistory);
+        setTrend("trend-hirings", hiringsPercentHistory);
+      }
+    </script>
+  </body>
+</html>
