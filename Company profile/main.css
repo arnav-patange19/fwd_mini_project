@@ -1,0 +1,54 @@
+body{
+    padding: 20px;
+}
+.main_div{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.first_div{
+    flex:3;
+    margin-right: 10px;
+}
+.second_div{
+    flex: 1;
+    
+}
+.section1,.section2,.section3{
+    margin-top: 10px;
+    border-radius: 50px;
+    box-shadow: 2px 2px 5px rgb(43, 42, 42);
+    padding-bottom: 5px;
+}
+.section2{
+    padding: 25px; 
+}
+.section3{
+    background-color: white;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.cmp_cover{
+    position: relative;
+}
+.cmp_logo{
+    position: absolute;
+    left: 70px;
+    top:120px;
+}
+.cmp_cover_img{
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    
+}
+.cmp_logo_img{
+    border: 4px white solid;
+}
+.cmp_first_intro{
+    margin-left: 40px;
+    margin-top: 120px;
+}
+.edit_profile{
+    background-color: white;
+
+}

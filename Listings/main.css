@@ -1,0 +1,14 @@
+.profile_image{
+    border-radius: 100%;
+    height: 80px;
+    width: 80px;
+}
+div{
+    text-align: center;
+}
+.search_bar{
+    border-radius: 10px;
+}
+.search_button{
+    border-radius: 10px;
+}

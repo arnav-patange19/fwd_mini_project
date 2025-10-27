@@ -1,0 +1,45 @@
+body{
+    padding: 20px;
+}
+.section1,.section2{
+    margin-top: 10px;
+    border-radius: 50px;
+    width: 76.2%;
+    box-shadow: 2px 2px 5px rgb(43, 42, 42);
+}
+.cmp_cover{
+    position: relative;
+}
+.cmp_logo{
+    position: absolute;
+    left: 70px;
+    top:120px;
+}
+.cmp_cover_img{
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    
+}
+.cmp_logo_img{
+    border: 4px white solid;
+}
+.cmp_first_intro{
+    margin-left: 40px;
+    margin-top: 120px;
+}
+.icons{
+    height: 100px;
+    width: 100px;
+    
+}
+.section2{
+    padding: 40px;
+}
+.slider_button1,.slider_button2{
+    font-size: 20px;
+    font-weight: bold;
+    background-color: white;
+    border: none;
+    border-bottom: 3px blue solid;
+    padding-right: 30px;
+}
