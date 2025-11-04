@@ -30,24 +30,17 @@ require_once "profile_model_inc.php";
         <link href = "profile_edit.css" type="text/css" rel = "stylesheet">
     </head>
     <body>
-<<<<<<< HEAD
         <form action = "save_update.php" method = "POST">
-=======
->>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
         <div class = "main_div">
             <div class = "first_div">
                 <div class = "section1">
                     <div class = "cmp_cover">
-<<<<<<< HEAD
                         <form action = "cover_update.php" method = "POST" enctype = "multipart/form-data">
                             <input type = "file" name = "file" style = "
                             position:absolute;
                             right :90px;
                             bottom:15px;
                             ">
-=======
-                        <form action = "profile_edit_contri_inc.php" method = "POST" enctype = "multipart/form-data">
->>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
                             <button style = "
                             position:absolute;
                             right :30px;
@@ -62,7 +55,6 @@ require_once "profile_model_inc.php";
                                 Update Cover
                             </button>
                         </form>
-<<<<<<< HEAD
                         <form action = "delete_cover.php" method = "POST">
                             <button type = "submit" style = "
                             position:absolute;
@@ -121,13 +113,6 @@ require_once "profile_model_inc.php";
                             
                             "><h4>Delete logo</h4></button>
                     </form>
-=======
-                        <img class ="cmp_cover_img" src = '<?php echo $cover; ?>'>
-                    </div>
-                    <div class = "cmp_logo">
-                        <!-- left -->
-                        <img class = "cmp_logo_img" src = '<?php echo $logo; ?>'>
->>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
                     </div>
                     <div class = "cmp_first_intro">
                         <label>Company Name :</label>
@@ -165,11 +150,7 @@ require_once "profile_model_inc.php";
             </div>
 
             <div class = "second_div">
-<<<<<<< HEAD
                 <center><button type = "submit" class = "section3" style = "background-color:greenyellow"><h2>Save</h2></button></center>
-=======
-                <center><button class = "section3" style = "background-color:greenyellow"><h2>Save</h2></button></center>
->>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
                 <div class = "section2">
                     <h2>Company stats</h2>
                     <h3>Industry</h3>
@@ -182,19 +163,11 @@ require_once "profile_model_inc.php";
                     </p>
                     <h3>Headquarters</h3>
                     <p>
-<<<<<<< HEAD
                         <input type = "text" value = "<?php echo $results["headquarters"];?>" id = "second_head">
-=======
-                        <input type = "text" value = "<?php echo $results["headquarters"];?>" name = "headquarters" id = "second_head">
->>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
                     </p>
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
         </form>
-=======
-
->>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
     </body>
 </html>

@@ -12,23 +12,10 @@ require_once "profile_model_inc.php";
             <div class = "first_div">
                 <div class = "section1">
                     <div class = "cmp_cover">
-<<<<<<< HEAD
-                        <img class ="cmp_cover_img" src = '<?php echo $cover; ?>' style = "
-                        height: 191px;
-                        width:100%;
-                        ">
-                    </div>
-                    <div class = "cmp_logo">
-                        <img class = "cmp_logo_img" src = '<?php echo $logo; ?>' style = "
-                        height: 208px;
-                        width: 208px;
-                        ">
-=======
                         <img class ="cmp_cover_img" src = '<?php echo $cover; ?>'>
                     </div>
                     <div class = "cmp_logo">
                         <img class = "cmp_logo_img" src = '<?php echo $logo; ?>'>
->>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
                     </div>
                     <div class = "cmp_first_intro">
                         <h2> <?php echo $results["cmp_name"];?> </h2>
