@@ -1,173 +1,152 @@
 <?php
 require_once "profile_model_inc.php";
+
+$results = $results ?? [];
+$results['cmp_name'] = $results['cmp_name'] ?? 'ExampleCorp';
+$results['industry'] = $results['industry'] ?? 'Software';
+$results['headquarters'] = $results['headquarters'] ?? 'San Francisco, CA';
+$results['overview'] = $results['overview'] ?? 'An example company overview.';
+$results['website'] = $results['website'] ?? 'https://example.com';
+$results['special'] = $results['special'] ?? 'Web, Cloud, AI';
+$results['achieve'] = $results['achieve'] ?? 'Reached 1M users.';
+$results['cmp_size'] = $results['cmp_size'] ?? '201-500';
+
+$cover = $cover ?? 'https://placehold.co/1200x300/e2e8f0/64748b?text=Cover+Image';
+$logo = $logo ?? 'https://placehold.co/200x200/e2e8f0/64748b?text=Logo';
 ?>
 
-<!Doctype html>
-<html>
-    <head>
-        <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(function(){
-                $("#first_indus").blur(function(){
-                    let val = document.getElementById('first_indus').value;
-                    $("#second_indus").val(val);
-                });
-                $("#second_indus").blur(function(){
-                    let val = document.getElementById('second_indus').value;
-                    $("#first_indus").val(val);
-                });
-                $("#first_head").blur(function(){
-                    let val = document.getElementById('first_head').value;
-                    $("#second_head").val(val);
-                });
-                $("#second_head").blur(function(){
-                    let val = document.getElementById('second_head').value;
-                    $("#first_head").val(val);
-                });
-            }
-            );
-        </script>
-        <link href = "profile_edit.css" type="text/css" rel = "stylesheet">
-    </head>
-    <body>
-        <form action = "save_update.php" method = "POST">
-        <div class = "main_div">
-            <div class = "first_div">
-                <div class = "section1">
-                    <div class = "cmp_cover">
-                        <form action = "cover_update.php" method = "POST" enctype = "multipart/form-data">
-                            <input type = "file" name = "file" style = "
-                            position:absolute;
-                            right :90px;
-                            bottom:15px;
-                            ">
-                            <button style = "
-                            position:absolute;
-                            right :30px;
-                            bottom:15px;
-                            font-size :20px;
-                            font-weight :bold;
-                            background-color:lightblue;
-                            border:none;
-                            border-radius:20px;
-                            padding:10px;
-                            ">
-                                Update Cover
-                            </button>
-                        </form>
-                        <form action = "delete_cover.php" method = "POST">
-                            <button type = "submit" style = "
-                            position:absolute;
-                            right :30px;
-                            bottom:-80px;
-                            font-size :20px;
-                            font-weight :bold;
-                            background-color:lightblue;
-                            border:none;
-                            border-radius:20px;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Company Profile</title>
+    
+    <link href="profile_edit.css" type="text/css" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+    <form action="save_update.php" method="POST" enctype="multipart/form-data">
+        <div class="main_div">
+
+            <div class="first_div">
+                
+                <div class="card">
+                    <div class="card-header">Company Media</div>
+                    <div class="form-grid">
+                        <div class="full-span">
+
+                            <div class="upload-group">
+                                <label for="cover_file">Cover Photo</label>
+                                <img src="<?php echo htmlspecialchars($cover); ?>" class="image-preview cover-preview">
+                                <div class="upload-controls">
+                                    <label class="file-btn">
+                                        <span>Choose File</span>
+                                        <input type="file" id="cover_file" name="cover_file">
+                                    </label>
+                                    <button type="submit" name="delete_cover" class="btn btn-danger">Delete Cover</button>
+                                </div>
+                            </div>
                             
-                            "><h4>Delete Cover</h4></button>
-                    </form>
-                        <img class ="cmp_cover_img" src = '<?php echo $cover; ?>' style = "
-                        width:100%;
-                        height: 191px;
-                        ">
+                            <div class="upload-group">
+                                <label for="logo_file">Company Logo</label>
+                                <img src="<?php echo htmlspecialchars($logo); ?>" class="image-preview logo-preview">
+                                <div class="upload-controls">
+                                     <label class="file-btn">
+                                        <span>Choose File</span>
+                                        <input type="file" id="logo_file" name="logo_file">
+                                    </label>
+                                    <button type="submit" name="delete_logo" class="btn btn-danger">Delete Logo</button>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-
-                    <div class = "cmp_logo">
-                        <img src = '<?php echo $logo; ?>' class = "cmp_logo_img" style = "
-                        height: 208px;
-                        width: 208px;
-                        "
-                         >
-                        <form action = "logo_update.php" method = "POST" enctype = "multipart/form-data">
-                            <input type = "file" name = "file" style = "
-                            position:absolute;
-                            right :-380px;
-                            bottom:15px;
-                            ">
-                            <button style = "
-                            position:absolute;
-                            right :30px;
-                            bottom:-10px;
-                            font-size :20px;
-                            font-weight :bold;
-                            background-color:lightblue;
-                            border:none;
-                            border-radius:20px;
-                            padding:10px;
-                            ">
-                                Update Logo
-                            </button>
-                        </form>
-                        <form action = "delete_logo.php" method = "POST">
-                            <button type = "submit" style = "
-                            position:absolute;
-                            right :-320px;
-                            bottom:-10px;
-                            font-size :20px;
-                            font-weight :bold;
-                            background-color:lightblue;
-                            border:none;
-                            border-radius:20px;
-                            
-                            "><h4>Delete logo</h4></button>
-                    </form>
-                    </div>
-                    <div class = "cmp_first_intro">
-                        <label>Company Name :</label>
-                        <input type = "text" value = "<?php echo $results["cmp_name"];?>" name = "cmp_name">
-
-
-                        <p>
-                            <label>Industry : </label>
-                            <input type = "text" value = "<?php echo $results["industry"];?>" name = "industry" id= "second_indus">
-                            &middot;
-                            <label>Headquarters : </label>
-                            <input type = "text" value = "<?php echo $results["headquarters"];?>" name = "headquarters" id = "first_head">
-                            &middot;
-
-                        </p>
-                        
-                    </div>
-                </div> 
-                <div class = "section2">
-                    <h2>Overview</h2>
-                    <p>
-                        <textarea rows = "8" cols = "80" name = "overview"><?php echo $results["overview"];?></textarea>
-                    </p>
-                    <h3>Website</h3>
-                    <p>
-                        <input type = "url" value = "<?php echo $results["website"];?>" name = "website">
-                    </p>
-                    <h3>Specialties</h3>
-                    <p><textarea rows = "8" cols = "80" name = "special"><?php echo $results["special"];?></textarea></p>
-                    <h3>Achievements</h3>
-                    <p>
-                        <textarea rows = "8" cols = "80" name = "achieve"><?php echo $results["achieve"];?></textarea>
-                    </p>
                 </div>
+
+                <div class="card">
+                    <div class="card-header">General Information</div>
+                    <div class="form-grid">
+                        
+                        <label for="cmp_name">Company Name</label>
+                        <input type="text" id="cmp_name" name="cmp_name" value="<?php echo htmlspecialchars($results['cmp_name']); ?>">
+                        
+                        <label for="industry">Industry</label>
+                        <input type="text" id="industry" name="industry" value="<?php echo htmlspecialchars($results['industry']); ?>">
+                        
+                        <label for="headquarters">Headquarters</label>
+                        <input type="text" id="headquarters" name="headquarters" value="<?php echo htmlspecialchars($results['headquarters']); ?>">
+
+                        <label for="website">Website</label>
+                        <input type="text" id="website" name="website" value="<?php echo htmlspecialchars($results['website']); ?>">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Overview</div>
+                    <div class="form-grid">
+                        <div class="full-span">
+                            <textarea name="overview" placeholder="An example company overview..."><?php echo htmlspecialchars($results['overview']); ?></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Specialties</div>
+                    <div class="form-grid">
+                        <div class="full-span">
+                            <textarea name="special" placeholder="Web, Cloud, AI..."><?php echo htmlspecialchars($results['special']); ?></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Achievements</div>
+                    <div class="form-grid">
+                        <div class="full-span">
+                            <textarea name="achieve" placeholder="Reached 1M users..."><?php echo htmlspecialchars($results['achieve']); ?></textarea>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div class = "second_div">
-                <center><button type = "submit" class = "section3" style = "background-color:greenyellow"><h2>Save</h2></button></center>
-                <div class = "section2">
-                    <h2>Company stats</h2>
-                    <h3>Industry</h3>
-                    <p >
-                        <input type = "text" id = "first_indus" value = "<?php echo $results["industry"];?>">
-                    </p>
-                    <h3>Company Size</h3>
-                    <p>
-                        <input type = "text" value = "<?php echo $results["cmp_size"];?>" name = "cmp_size">
-                    </p>
-                    <h3>Headquarters</h3>
-                    <p>
-                        <input type = "text" value = "<?php echo $results["headquarters"];?>" id = "second_head">
-                    </p>
+            <div class="second_div">
+                <div class="sidebar-widget">
+                    <h3>Actions</h3>
+                    <button type="submit" name="save_all" class="btn btn-save">Save All Changes</button>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3>Company Stats</h3>
+                    <div class="form-grid">
+                        <label for="industry_stat">Industry</label>
+                        <input type="text" id="industry_stat" value="<?php echo htmlspecialchars($results['industry']); ?>" readonly>
+                        
+                        <label for="headquarters_stat">Headquarters</label>
+                        <input type="text" id="headquarters_stat" value="<?php echo htmlspecialchars($results['headquarters']); ?>" readonly>
+
+                        <label for="cmp_size">Company Size</label>
+                        <input type="text" id="cmp_size" name="cmp_size" value="<?php echo htmlspecialchars($results['cmp_size']); ?>">
+                    </div>
                 </div>
             </div>
         </div>
-        </form>
-    </body>
+    </form>
+
+    <script>
+        document.getElementById('industry').addEventListener('input', function() {
+            document.getElementById('industry_stat').value = this.value;
+        });
+        document.getElementById('headquarters').addEventListener('input', function() {
+            document.getElementById('headquarters_stat').value = this.value;
+        });
+    </script>
+
+</body>
 </html>

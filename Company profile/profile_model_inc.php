@@ -1,7 +1,7 @@
 <?php
 try{
-    require_once "..\\includes\\db_inc.php";
-    require_once "..\\includes\\config_session_inc.php";
+    require_once "../includes/db_inc.php";
+    require_once "../includes/config_session_inc.php";
 
     $_SESSION['cmp_id'] = 1;
 
@@ -15,8 +15,8 @@ try{
 
     $results = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $logo = "..\\cmp_logos\\".$results["cmp_name"]."\\logo.jpeg";
-    $cover = "..\\cmp_logos\\".$results["cmp_name"]."\\cover.jpeg";
+    $logo = "../cmp_logos/".$results["cmp_name"]."/logo.jpeg";
+    $cover = "../cmp_logos/".$results["cmp_name"]."/cover.jpeg";
 
     $_SESSION['cmp_name'] = $results["cmp_name"];
 
