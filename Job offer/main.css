@@ -1,0 +1,33 @@
+body{
+    padding: 20px;
+}
+.main_div{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 40px;
+}
+.post{
+    text-align: right;
+}
+.cart{
+    border: 1px black solid; 
+    border-radius: 20px;
+    padding: 20px;
+}
+.circles{
+    background-color: rgb(203, 203, 203);
+    padding: 8px;
+    border-radius:20px;
+    margin-right: 10px;
+}
+.post_button,.view{
+    padding: 10px 20px;
+    background-color: blue;
+    color:white;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    box-sizing: border-box; 
+}
