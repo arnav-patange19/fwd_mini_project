@@ -46,3 +46,21 @@ CREATE TABLE job_offers (
     FOREIGN KEY (cmp_id) REFERENCES company_profile(id) ON DELETE CASCADE 
 );
 
+
+CREATE TABLE applicant_profile (
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(30) NOT NULL,
+    name VARCHAR(30) NOT NULL,
+    pwd VARCHAR(30) NOT NULL,
+    email VARCHAR(30) NOT NULL,
+    location VARCHAR(30) NOT NULL,
+    pronouns VARCHAR(30) DEFAULT 'Prefer not to say',
+    about TEXT DEFAULT NULL,
+    experience TEXT DEFAULT NULL,
+    education TEXT DEFAULT NULL,
+    skills TEXT DEFAULT NULL,
+    pdf INT(1) NOT NULL DEFAULT 0,
+    achievements TEXT DEFAULT NULL,
+    goals TEXT DEFAULT NULL
+);
+
