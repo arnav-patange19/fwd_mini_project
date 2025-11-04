@@ -2,7 +2,11 @@
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');     
 define('DB_PASSWORD', '');         
+<<<<<<< HEAD
 define('DB_NAME', 'job_search');
+=======
+define('DB_NAME', 'jobsearch_db');
+>>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
 
 $pdo = null;
 try {
@@ -100,8 +104,14 @@ function get_all_jobs($pdo, $filters = []) {
             if (!empty($job['work_type'])) $tags[] = $job['work_type'];
             if (!empty($job['exp_yrs'])) $tags[] = $job['exp_yrs'];
 
+<<<<<<< HEAD
             $formatted_salary = '$' . number_format($job['salary'], 0); 
             $formatted_date = date('j M, Y', strtotime($job['posted_date']));
+=======
+            $formatted_salary = '$' . number_format($job['salary'], 0) . '/hr'; 
+            $formatted_date = date('j M, Y', strtotime($job['posted_date']));
+            $logo_display = !empty($job['cmp_logo']) ? $job['cmp_logo'] : strtoupper(substr($job['company'], 0, 1));
+>>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
             
             $card_color = $colors[$color_index % count($colors)];
             $color_index++;
@@ -114,6 +124,10 @@ function get_all_jobs($pdo, $filters = []) {
                 'salary'   => $formatted_salary,
                 'location' => $job['location'],
                 'tags'     => array_unique($tags), 
+<<<<<<< HEAD
+=======
+                'logo'     => $logo_display,
+>>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
                 'color'    => $card_color
             ];
         }

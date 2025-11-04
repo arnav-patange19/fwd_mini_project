@@ -3,7 +3,11 @@ try{
     require_once "..\\includes\\db_inc.php";
     require_once "..\\includes\\config_session_inc.php";
 
+<<<<<<< HEAD
     $_SESSION['cmp_id'] = 2;
+=======
+    $_SESSION['cmp_id'] = 1;
+>>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
 
     $cmp_id = $_SESSION['cmp_id'];
     
@@ -18,8 +22,11 @@ try{
     $logo = "..\\cmp_logos\\".$results["cmp_name"]."\\logo.jpeg";
     $cover = "..\\cmp_logos\\".$results["cmp_name"]."\\cover.jpeg";
 
+<<<<<<< HEAD
     $_SESSION['cmp_name'] = $results["cmp_name"];
 
+=======
+>>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
     $pdo = null;
     $stmt = null;
 

@@ -1,7 +1,10 @@
 <?php
 require_once 'config.php';
 
+<<<<<<< HEAD
 $username = $_SESSION['username'];
+=======
+>>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
 $salary_min_input = $_GET['salary_min'] ?? '';
 $salary_max_input = $_GET['salary_max'] ?? '';
 
@@ -93,7 +96,11 @@ function is_selected($option, $current_value) {
         <div class="user-area">
             <span class="location">Mumbai, BOM</span>
             <div class="notification-icon">🔔</div>
+<<<<<<< HEAD
             <a href = "..\\applicant\\profile.php"><div class="user-avatar"></div></a>
+=======
+            <div class="user-avatar"></div>
+>>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
             <div class="settings-icon">⚙️</div>
         </div>
     </header>
@@ -139,6 +146,18 @@ function is_selected($option, $current_value) {
                     </div>
                 </div>
                 
+<<<<<<< HEAD
+=======
+                <div class="filter-group">
+                    <h4>Salary Frequency</h4>
+                    <select class="filter-select">
+                        <option>Per hour</option>
+                        <option>Per month</option>
+                        <option>Per year</option>
+                    </select>
+                </div>
+
+>>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
 
                 <div class="filter-group">
                     <h4>Working schedule</h4>
@@ -188,7 +207,11 @@ function is_selected($option, $current_value) {
                         echo '      <span class="bookmark-icon">☐</span>';
                         echo '  </div>';
                         echo '  <div class="job-details">';
+<<<<<<< HEAD
                         echo '      <div class="company-logo-large"><img style = "height:50px ;border-radius:25px" src = "..\\cmp_logos\\'.$job['company'].'\\logo.jpeg"></div>';
+=======
+                        echo '      <div class="company-logo-large">' . htmlspecialchars($job['logo']) . '</div>';
+>>>>>>> ef7768321d3b2581b7129728829c6096b772e67b
                         echo '      <div class="job-info">';
                         echo '          <p class="company-name">' . htmlspecialchars($job['company']) . '</p>';
                         echo '          <h3 class="job-title-card">' . htmlspecialchars($job['title']) . '</h3>';
